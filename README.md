@@ -2,6 +2,8 @@
 
 Use socket in python to create tunnel & send message.
 
+Assuming that 4 devices are available
+
 It must be awkward to admit that this is the first time I tried object-oriented programming, cause I always consider it procedure-oriented.
 
 ## encode : message -> inner ip package -> outer ip package

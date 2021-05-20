@@ -50,8 +50,8 @@ class Device:
         print("Outer IP Package created:")
         print(outer_ip_package.__dict__)
         print("-------------------------------------------")
-        steam = outer_ip_package.encode()
-        return steam
+        stream = outer_ip_package.encode()
+        return stream
 
     def decode_message(self, steam):
         outer_ip_package = Outer_IP_Package.decode(steam)

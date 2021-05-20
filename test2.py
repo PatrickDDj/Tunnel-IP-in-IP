@@ -1,6 +1,5 @@
 from device import Device
-from ip_package import Inner_IP_Package, Outer_IP_Package
-import json
+
 
 if __name__ == '__main__':
     device = Device('127.0.0.1', 8894)

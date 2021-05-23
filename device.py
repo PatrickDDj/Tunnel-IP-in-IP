@@ -4,12 +4,14 @@ from ip_package import *
 
 class Device:
 
-    def __init__(self, host, port):
+    def __init__(self, host, port, next_host=None, next_port=None):
         self.source_address = host
         self.server = socket.socket()
         self.server.bind((host, port))
         self.server.listen(5)
         self.port = port
+        self.next_port = next_port
+        self.next_host = next_host
 
     def run(self):
         print("Device %d started!" % self.port)
@@ -17,17 +19,26 @@ class Device:
             client, addr = self.server.accept()
             print('Connection from ', addr)
             message = self.decode_message(client.recv(1024))
+
             print("message : ", message)
+
+            if self.next_host != None:
+                self.create_tunnel()
+                self.send(message)
+                self.close_tunnel()
 
     def start(self):
         th = threading.Thread(target=self.run)
         th.start()
 
-    def create_tunnel(self, host, port):
-        self.destination_address = host
-        self.client = socket.socket()
-        self.client.connect((host, port))
-        print("Tunnel created (from %s:%d to %s:%d)" % (self.source_address, self.port ,self.client.getsockname()[0], self.client.getsockname()[1]))
+    def create_tunnel(self):
+        if self.next_port != None:
+            port = self.next_port
+            host = self.next_host
+            self.destination_address = host
+            self.client = socket.socket()
+            self.client.connect((host, port))
+            print("Tunnel created (from %s:%d to %s:%d)" % (self.source_address, self.port ,self.client.getsockname()[0], self.client.getsockname()[1]))
 
     def send(self, message):
         steam = self.encode_message(message)

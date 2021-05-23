@@ -1,4 +1,5 @@
 from device import Device
+from ip_package import *
 import sys
 
 if __name__ == '__main__':
@@ -10,6 +11,7 @@ if __name__ == '__main__':
 
     if flag==1:
         device.create_tunnel()
-        device.send("Hello World!")
+        inner_ip_package = Inner_IP_Package('127.0.0.1', '127.0.0.1', "Hello World!")
+        device.send(inner_ip_package)
         device.close_tunnel()
 
